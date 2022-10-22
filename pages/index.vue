@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import moment from "moment";
+
 interface Post {
   id: string;
   title: string;
@@ -24,6 +26,10 @@ const { data } = await useFetch<Post[]>(
 );
 
 const posts: Post[] = data.value;
+
+function formatDate(date: Date) {
+  return moment(date).locale("en").fromNow();
+}
 </script>
 
 <template>
@@ -31,16 +37,15 @@ const posts: Post[] = data.value;
     <v-row dense>
       <v-col v-for="post in posts" :key="post.title">
         <v-card>
-          <v-card-title v-text="post.title"></v-card-title>
+          <v-card-title v-text="post.title"> </v-card-title>
 
-          <v-card-text>
-            <div>{{ post.state }}</div>
-
-            <div>{{ post.createdAt }}</div>
-          </v-card-text>
+          <v-card-subtitle>
+            <v-chip size="x-small">{{ post.state }}</v-chip>
+            {{ formatDate(post.createdAt) }}
+          </v-card-subtitle>
 
           <v-card-actions>
-            <v-btn color="primary"> Lire la suite </v-btn>
+            <v-btn color="primary"> Read more </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
