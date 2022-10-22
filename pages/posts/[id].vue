@@ -5,21 +5,19 @@ import { useRoute } from "vue-router";
 const route = useRoute();
 const id: string | string[] = route.params.id;
 
-const { data } = await useFetch<Post>(
-  "https://technical-test.findly.co/api/posts/" + id
+const { data: post, error } = await useFetch<Post>(
+  () => `https://technical-test.findly.co/api/posts/${id}`,
+  { key: `post:${id}` }
 );
-
-const post: Post = data.value;
 </script>
 
 <template>
-  <v-container>
-    <v-row dense>
-      <v-btn variant="tonal" @click="$router.back()"> Button </v-btn>
+  <v-row v-if="error">{{ error }}</v-row>
+  <v-row dense v-else>
+    <v-btn variant="tonal" @click="$router.back()"> Button </v-btn>
 
-      <h2>{{ post.title }}</h2>
+    <h2>{{ post.title }}</h2>
 
-      <p>{{ post.content }}</p>
-    </v-row>
-  </v-container>
+    <p>{{ post.content }}</p>
+  </v-row>
 </template>

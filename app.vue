@@ -1,8 +1,7 @@
 <template>
   <v-container>
-    <v-row dense>
-      <h1>Influentia</h1>
-    </v-row>
+    <h1>Influentia</h1>
+
+    <NuxtPage />
   </v-container>
-  <NuxtPage />
 </template>

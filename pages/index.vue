@@ -2,11 +2,9 @@
 import moment from "moment";
 import { Post } from "@/types/post";
 
-const { data } = await useFetch<Post[]>(
+const { data: posts, error } = await useFetch<Post[]>(
   "https://technical-test.findly.co/api/posts?page=1"
 );
-
-const posts: Post[] = data.value;
 
 function formatDate(date: Date) {
   return moment(date).locale("en").fromNow();
@@ -14,8 +12,9 @@ function formatDate(date: Date) {
 </script>
 
 <template>
-  <v-container>
-    <v-row dense align="start">
+  <div>
+    <v-row v-if="error"> {{ error }}</v-row>
+    <v-row dense v-else>
       <v-col v-for="post in posts" :key="post.title">
         <v-card>
           <v-card-title v-text="post.title"> </v-card-title>
@@ -33,5 +32,5 @@ function formatDate(date: Date) {
         </v-card>
       </v-col>
     </v-row>
-  </v-container>
+  </div>
 </template>
