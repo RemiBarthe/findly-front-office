@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h1>Influentia</h1>
+    <h1 class="mb-8">Influentia</h1>
 
     <NuxtPage />
   </v-container>
